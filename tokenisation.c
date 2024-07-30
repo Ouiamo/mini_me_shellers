@@ -51,9 +51,9 @@ char    *handel_normal_arg(char *input)
     i = 0;
     while (input[i] && !white_spaces(input[i]) && input[i] != '|' && input[i] != '&' && input[i] != '>' && input[i] != '<' && input[i] != '(' && input[i] != ')')
         {
-            if (input[i] == 34 || input[i] == 39)
-                input = handel_quotes(input);
-            else
+            // if (input[i] == 34 || input[i] == 39)
+            //     input = handel_quotes(input);
+            //else
                 i++;
         }
         return (&input[i]);
@@ -70,9 +70,10 @@ int count_tokens(char *input)
         return (0);
     while (*input)
     {
-        if (*input == 34 || *input == 39) 
-            input = handel_quotes(input);
-        else if (*input == '|' || *input == '&' || *input == '>' || *input == '<')
+        // if (*input == 34 || *input == 39) 
+        //     input = handel_quotes(input);
+        // else 
+        if (*input == '|' || *input == '&' || *input == '>' || *input == '<')
             input = handel_pipe_redir(input);
         else if (*input == '(' || *input == ')')
             input = handel_prnt(input);
@@ -123,7 +124,6 @@ char *cpy_prnt(char **input)
 int arg_size(char *input)
 {
     int     i;
-    char	quote;
 
     i = 0;
     while (input[i] && input[i] != '|' && input[i] != '&' && input[i] != '>' && input[i] != '<' && input[i] != '(' && input[i] != ')')
@@ -196,7 +196,7 @@ char    **tokensation(char *input)
 
 // int main()
 // {
-//     char *tmp = "l\"asasdsd\"";
+//     char *tmp = "hjk >> hfjhf \"fkhaf\" ja\"jkas\"afhj || && (djf) << aai >>>> && jd";
 //     char **tab = tokensation(tmp);
 //     int i = 0;
 //     while (tab[i] != NULL)
@@ -204,8 +204,10 @@ char    **tokensation(char *input)
 //         printf("this is : %s\n ",tab[i]);
 //         i++;
 //         printf("%d\n", i);
+    
 //     }
 //     return 0;
+
 // }
 
 

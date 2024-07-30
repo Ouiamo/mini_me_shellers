@@ -6,7 +6,7 @@
 /*   By: oaoulad- <oaoulad-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 02:42:23 by oaoulad-          #+#    #+#             */
-/*   Updated: 2024/07/26 09:49:22 by oaoulad-         ###   ########.fr       */
+/*   Updated: 2024/07/30 09:08:51 by oaoulad-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,13 @@ typedef enum e_signal_status
 
 char	*ft_strdup(const char *s1);
 char	*ft_substr(char *s, int start, size_t len);
+size_t  ft_strlen(char *str);
 
 //minishell functions:
 
-void    read_user_cmd(t_shell *shell);
+// void    read_user_cmd(char **env);
+void    read_user_cmd(void);
 char **tokensation(char *input);
+void    syntax_error(char **arr);
 
 #endif

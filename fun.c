@@ -6,7 +6,7 @@
 /*   By: oaoulad- <oaoulad-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 02:50:19 by oaoulad-          #+#    #+#             */
-/*   Updated: 2024/07/26 10:47:28 by oaoulad-         ###   ########.fr       */
+/*   Updated: 2024/07/30 09:13:05 by oaoulad-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,10 @@ void    cheak_empty_input(char *input)
     }
 }
 
-void    read_user_cmd(t_shell *shell)
+void    read_user_cmd(void)
 {
     char    *input;
-    int     status;
-    char    **tab;
+    char    **arr;
     
     while (1)
     {
@@ -51,13 +50,15 @@ void    read_user_cmd(t_shell *shell)
         input = readline("minishell $ ");
         cheak_empty_input(input);
         add_history(input);
-        tab = tokensation(input);
+        arr = tokensation(input);
         int i = 0;
-        while (tab[i] != NULL)
+        while (arr[i] != NULL)
         {
-            printf("this is : %s\n ",tab[i]);
+            printf("this is : %s\n ",arr[i]);
             i++;
             printf("%d\n", i);
         }
+        syntax_error(arr);
+        //parsing(arr,)
     }
 }
