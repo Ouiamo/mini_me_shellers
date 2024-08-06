@@ -1,7 +1,7 @@
 #include "minishell.h"
 int white_spaces(char c)
 {
-    if (c == ' ' || c == '\t' || c == '\n')
+    if (c == ' ' || c == '\t'   )
         return (1);
     return (0);
 }
@@ -51,9 +51,9 @@ char    *handel_normal_arg(char *input)
     i = 0;
     while (input[i] && !white_spaces(input[i]) && input[i] != '|' && input[i] != '&' && input[i] != '>' && input[i] != '<' && input[i] != '(' && input[i] != ')')
         {
-            // if (input[i] == 34 || input[i] == 39)
-            //     input = handel_quotes(input);
-            //else
+            if (input[i] == 34 || input[i] == 39)
+                input = handel_quotes(&input[i]);
+            else
                 i++;
         }
         return (&input[i]);
@@ -70,10 +70,9 @@ int count_tokens(char *input)
         return (0);
     while (*input)
     {
-        // if (*input == 34 || *input == 39) 
-        //     input = handel_quotes(input);
-        // else 
-        if (*input == '|' || *input == '&' || *input == '>' || *input == '<')
+        if (*input == 34 || *input == 39) 
+            input = handel_quotes(input);
+        else if (*input == '|' || *input == '&' || *input == '>' || *input == '<')
             input = handel_pipe_redir(input);
         else if (*input == '(' || *input == ')')
             input = handel_prnt(input);
@@ -189,6 +188,7 @@ char    **tokensation(char *input)
     char    **arr;
 
     tokens = count_tokens(input);
+    printf("nbr of tokens : %d\n", tokens);
     arr = malloc(sizeof(char *) * (tokens + 1));
     arr = cpy_to_arr(input, arr, tokens);
     return (arr);

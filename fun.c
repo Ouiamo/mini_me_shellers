@@ -6,7 +6,7 @@
 /*   By: oaoulad- <oaoulad-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 02:50:19 by oaoulad-          #+#    #+#             */
-/*   Updated: 2024/07/30 09:13:05 by oaoulad-         ###   ########.fr       */
+/*   Updated: 2024/08/02 11:24:36 by oaoulad-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,27 @@ void    handling_signals(t_signal_status status)
     }
 }
 
-void    cheak_empty_input(char *input)
+void    cheak_end_of_input(char *input)
 {
     if (!input)
     {
-        printf("\nexit\n");
+        printf("exit\n");
         exit(0);
     }
+}
+
+int no_input(char *input)
+{
+    while (*input)
+    {
+        if (white_spaces(*input))
+            input++;
+        else
+            break;
+    }
+    if (!*input)
+        return(1);
+    return(0);
 }
 
 void    read_user_cmd(void)
@@ -48,7 +62,9 @@ void    read_user_cmd(void)
     {
         handling_signals(POS1);
         input = readline("minishell $ ");
-        cheak_empty_input(input);
+        cheak_end_of_input(input);
+        if (no_input(input))
+            continue;
         add_history(input);
         arr = tokensation(input);
         int i = 0;
@@ -59,6 +75,5 @@ void    read_user_cmd(void)
             printf("%d\n", i);
         }
         syntax_error(arr);
-        //parsing(arr,)
     }
 }

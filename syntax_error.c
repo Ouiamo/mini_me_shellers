@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-int cheak_prnt(char **arr)
+char    *cheak_prnt(char **arr)
 {
     int prnt;
 
@@ -12,11 +12,11 @@ int cheak_prnt(char **arr)
         else if (**arr == ')')
             prnt--;
         if (prnt < 0)
-            return (')');
+            return (")");
         arr++;
     }
     if (prnt > 0)
-            return ('(');
+            return ("(");
     return (0);
 }
 
@@ -26,8 +26,6 @@ char    *first_cheak(char **arr)
         return (*arr);
     arr++;
     if (!*arr)
-        return ("newline");
-    else if (**arr == '>' && ft_strlen(*arr) == 1)
         return ("newline");
     else if (*arr && (**arr == '|' || **arr == '&' || **arr == '<' || **arr == '>' || **arr == '(' || **arr == ')'))
         return (*arr);
@@ -51,11 +49,13 @@ char    *second_cheak(char **arr)
 
 char    *third_cheak(char **arr)
 {
+    // printf("%s\n", *arr);
     arr++;
     if (!*arr)
         return ("newline");
     else if (*arr && (**arr == '|' || **arr == '&'))
         return (*arr);
+    // printf("%s\n", *arr);
     return (NULL);
 }
 
@@ -63,8 +63,10 @@ char    *cheak_arr(char  **arr)
 {
     char    *ptr;
 
-    if (**arr == '|' || **arr == '&' || cheak_prnt(arr))
+    if (**arr == '|' || **arr == '&')
         return (*arr);
+    if (cheak_prnt(arr))
+        return (cheak_prnt(arr));
     while (*arr)
     {
         ptr = first_cheak(arr);
