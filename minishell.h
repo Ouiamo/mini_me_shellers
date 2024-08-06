@@ -6,7 +6,7 @@
 /*   By: oaoulad- <oaoulad-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 02:42:23 by oaoulad-          #+#    #+#             */
-/*   Updated: 2024/08/01 09:11:10 by oaoulad-         ###   ########.fr       */
+/*   Updated: 2024/08/06 14:32:20 by oaoulad-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,25 @@
 # include <readline/history.h>
 
 
+typedef struct s_list
+{
+	void			*content;
+	struct s_list	*next;
+}	t_list;
+
 typedef struct s_shell
 {
-	
+	char	*cmd;
+	int		pipe_type;
+	int		prnt;
+	t_list	*args;
 	char	**arr;
 }								t_shell;
 
 typedef enum e_signal_status
 {
-	DEFAULT,
 	POS1,
+	DEFAULT,
 	IGNORE,
 }		t_signal_status;
 
@@ -44,8 +53,10 @@ size_t  ft_strlen(char *str);
 
 // void    read_user_cmd(char **env);
 int white_spaces(char c);
-void    read_user_cmd(void);
+void    read_user_cmd(char **env);
 char **tokensation(char *input);
 void    syntax_error(char **arr);
+void    parsiing(char **env, t_shell *shell, char **arr);
+
 
 #endif

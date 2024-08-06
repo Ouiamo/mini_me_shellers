@@ -16,7 +16,9 @@ char    *handel_quotes(char *input)
     i++;
     while (input[i] && input[i] != quote)
         i++;
-    if(input[i] == quote)
+    if (input[i] != quote)
+        printf("UNCLOSED QUOTE\n");
+    else if(input[i] == quote)
         i++;
     return (&input[i]);
 
