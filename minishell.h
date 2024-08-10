@@ -29,6 +29,7 @@ typedef struct s_list
 
 typedef struct s_shell
 {
+	char	*full_commnad;
 	char	*cmd;
 	int		pipe_type;
 	int		prnt;

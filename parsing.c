@@ -107,8 +107,68 @@ void    creat_my_shell(t_shell *shell, char  **arr)
 }
 //---------------------------------------------------------------------------------------------------
 
+char    *my_join(char *s1, char *s2)
+{
+    int i;
+    int j;
+    char    *join;
+
+    i = 0;
+    j = 0;
+    while (s1[i])
+        i++;
+    while (s2[j])
+        j++;
+    join = malloc(i + j + 2);
+    i = 0;
+    j = 0;
+    while (s1[i])
+        join[j++] = s1[i++];
+    join[j++] = ' ';
+    i = 0;
+    while (s2[i])
+        join[j++] = s2[i++];
+    join[j] = '\0';
+    return (join);
+}
+
+char    *join_my_command(t_shell shell)
+{
+    t_list  *flags;
+    char    *my_command;
+    char    *tmp;
+
+    if (!shell.flags)
+        return(my_join(shell.cmd, NULL));
+    flags = shell.flags;
+    my_command = my_join(shell.cmd, flags->content);
+    flags = flags->next;
+    while (flags)
+    {
+        tmp = my_command;
+        my_command = my_join(my_command, flags->content);
+        free(tmp);
+        flags = flags->next;
+    }
+    return (my_command);
+}
+
+
+void    join_my_shell(t_shell   *shell, int n)
+{
+    int i;
+
+    i = 0;
+    while (i < n)
+    {
+        shell[i].full_commnad = join_my_command(shell[i]);
+        i++;
+    }
+}
+
 void    parsiing(char **env, t_shell    *shell, char **arr)
 {
     initial_my_shell(shell, arr);
     creat_my_shell(shell, arr);
+    join_my_shell(shell, nbr_commands(arr));
 }
