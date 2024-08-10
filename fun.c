@@ -6,7 +6,7 @@
 /*   By: oaoulad- <oaoulad-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 02:50:19 by oaoulad-          #+#    #+#             */
-/*   Updated: 2024/08/06 14:31:39 by oaoulad-         ###   ########.fr       */
+/*   Updated: 2024/08/10 18:24:19 by oaoulad-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ void    read_user_cmd(char **env)
     char    **arr;
     t_shell *shell;
     
+    //(void)env;
+    shell = NULL;
     while (1)
     {
         handling_signals(POS1);

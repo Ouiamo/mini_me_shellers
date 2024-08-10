@@ -92,7 +92,7 @@ void    creat_my_shell(t_shell *shell, char  **arr)
     i = 0;
     while (*arr)
     {
-        if (**arr == '|' || *arr == '&&')
+        if (**arr == '|' || **arr == '&')
         {
             shell[i] = add_pipetype(*arr, shell[i]);
             i++;
@@ -166,8 +166,9 @@ void    join_my_shell(t_shell   *shell, int n)
     }
 }
 
-void    parsiing(char **env, t_shell    *shell, char **arr)
+void    parsing(char **env, t_shell    *shell, char **arr)
 {
+    (void)env;
     initial_my_shell(shell, arr);
     creat_my_shell(shell, arr);
     join_my_shell(shell, nbr_commands(arr));

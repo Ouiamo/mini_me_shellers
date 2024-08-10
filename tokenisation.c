@@ -72,9 +72,10 @@ int count_tokens(char *input)
         return (0);
     while (*input)
     {
-        if (*input == 34 || *input == 39) 
-            input = handel_quotes(input);
-        else if (*input == '|' || *input == '&' || *input == '>' || *input == '<')
+        // if (*input == 34 || *input == 39) 
+        // //     input = handel_quotes(input);
+        // else 
+        if (*input == '|' || *input == '&' || *input == '>' || *input == '<')
             input = handel_pipe_redir(input);
         else if (*input == '(' || *input == ')')
             input = handel_prnt(input);
