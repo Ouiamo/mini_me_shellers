@@ -32,7 +32,7 @@ typedef struct s_shell
 	char	*cmd;
 	int		pipe_type;
 	int		prnt;
-	t_list	*args;
+	t_list	*flags;
 	char	**arr;
 }								t_shell;
 
