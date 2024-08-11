@@ -71,6 +71,7 @@ t_list  *add_flags(char *arr, t_shell shell)
 
 t_shell add_cmd(char ***arr, t_shell shell)
 {
+    printf("76\n");
     while (**arr)
     {
         if (***arr == '|' || ***arr == '&' || ***arr == '(' || ***arr == ')' || ***arr == '<' || ***arr == '>')
@@ -90,8 +91,10 @@ void    creat_my_shell(t_shell *shell, char  **arr)
     int i;
 
     i = 0;
+    //(void)shell;
     while (*arr)
     {
+        
         if (**arr == '|' || **arr == '&')
         {
             shell[i] = add_pipetype(*arr, shell[i]);
@@ -100,7 +103,10 @@ void    creat_my_shell(t_shell *shell, char  **arr)
         else if (**arr == '(' || **arr == ')')
             shell[i] = add_prnt(**arr, shell[i]);
         else
+        {
+            printf("96\n");
             shell[i] = add_cmd(&arr, shell[i]);
+        }
         arr++;
     }
     
@@ -166,10 +172,9 @@ void    join_my_shell(t_shell   *shell, int n)
     }
 }
 
-void    parsing(char **env, t_shell    *shell, char **arr)
+void    parsing(t_shell    *shell, char **arr)
 {
-    (void)env;
     initial_my_shell(shell, arr);
     creat_my_shell(shell, arr);
-    join_my_shell(shell, nbr_commands(arr));
+    // join_my_shell(shell, nbr_commands(arr));
 }

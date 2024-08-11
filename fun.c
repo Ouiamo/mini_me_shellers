@@ -6,7 +6,7 @@
 /*   By: oaoulad- <oaoulad-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 02:50:19 by oaoulad-          #+#    #+#             */
-/*   Updated: 2024/08/10 18:24:19 by oaoulad-         ###   ########.fr       */
+/*   Updated: 2024/08/10 19:56:55 by oaoulad-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void    read_user_cmd(char **env)
     char    **arr;
     t_shell *shell;
     
-    //(void)env;
+    (void)env;
     shell = NULL;
     while (1)
     {
@@ -78,6 +78,6 @@ void    read_user_cmd(char **env)
             printf("%d\n", i);
         }
         syntax_error(arr);
-        parsing(env, shell, arr);
+        parsing(shell, arr);
     }
 }

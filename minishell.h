@@ -6,7 +6,7 @@
 /*   By: oaoulad- <oaoulad-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 02:42:23 by oaoulad-          #+#    #+#             */
-/*   Updated: 2024/08/10 18:27:25 by oaoulad-         ###   ########.fr       */
+/*   Updated: 2024/08/10 18:33:27 by oaoulad-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int white_spaces(char c);
 void    read_user_cmd(char **env);
 char **tokensation(char *input);
 void    syntax_error(char **arr);
-void    parsing(char **env, t_shell    *shell, char **arr);
+void    parsing(t_shell    *shell, char **arr);
 
 
 #endif
