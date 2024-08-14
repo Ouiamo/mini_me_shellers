@@ -13,19 +13,20 @@ int nbr_commands(char **arr)
     }
     return (i);
 }
-void    initial_my_shell(t_shell *shell, char  **arr)
+void    initial_my_shell(t_minishell *minishell, char  **arr)
 {
     int i ;
 
     i = nbr_commands(arr);
-    shell = malloc(sizeof(t_shell) * (i + 1));
-    
+    minishell->shell = malloc(sizeof(t_shell) * (i + 1));
+    //minishell->shell[0].full_commnad = NULL;
     while (i > -1)
     {
-        shell[i].pipe_type = 0;
-        shell[i].prnt = 0;
-        shell[i].cmd = NULL;
-        shell[i].flags = NULL;
+        minishell->shell[i].pipe_type = 0;
+        minishell->shell[i].prnt = 0;
+        minishell->shell[i].cmd = NULL;
+        minishell->shell[i].flags = NULL;
+        //minishell->shell[i].full_commnad = NULL;
         i--;
     }
 }
@@ -34,12 +35,12 @@ void    initial_my_shell(t_shell *shell, char  **arr)
 
 t_shell add_pipetype(char   *arr, t_shell shell)
 {
-    if (arr[0] == '&' && arr[1])
-        shell.pipe_type = 3;
     if (arr[0] == '|' && arr[1])
         shell.pipe_type = 2;
-    else
+    else if (arr[0] == '|')
         shell.pipe_type = 1;
+    else
+        shell.pipe_type = 3;
     return (shell);
 }
 
@@ -71,7 +72,6 @@ t_list  *add_flags(char *arr, t_shell shell)
 
 t_shell add_cmd(char ***arr, t_shell shell)
 {
-    printf("76\n");
     while (**arr)
     {
         if (***arr == '|' || ***arr == '&' || ***arr == '(' || ***arr == ')' || ***arr == '<' || ***arr == '>')
@@ -86,27 +86,24 @@ t_shell add_cmd(char ***arr, t_shell shell)
     return (shell);
 }
 
-void    creat_my_shell(t_shell *shell, char  **arr)
+void    creat_my_shell(t_minishell *minishell, char  **arr)
 {
     int i;
 
     i = 0;
-    //(void)shell;
     while (*arr)
     {
         
         if (**arr == '|' || **arr == '&')
         {
-            shell[i] = add_pipetype(*arr, shell[i]);
+            minishell->shell[i] = add_pipetype(*arr, minishell->shell[i]);
             i++;
         }
+        // add_redir
         else if (**arr == '(' || **arr == ')')
-            shell[i] = add_prnt(**arr, shell[i]);
+            minishell->shell[i] = add_prnt(**arr, minishell->shell[i]);
         else
-        {
-            printf("96\n");
-            shell[i] = add_cmd(&arr, shell[i]);
-        }
+            minishell->shell[i] = add_cmd(&arr, minishell->shell[i]);
         arr++;
     }
     
@@ -118,13 +115,15 @@ char    *my_join(char *s1, char *s2)
     int i;
     int j;
     char    *join;
-
     i = 0;
     j = 0;
+    // printf ("this is s1 %s \n", s1);
+    // printf ("this is s2 %s \n", s2);
     while (s1[i])
         i++;
     while (s2[j])
         j++;
+    // printf("161\n");
     join = malloc(i + j + 2);
     i = 0;
     j = 0;
@@ -145,7 +144,7 @@ char    *join_my_command(t_shell shell)
     char    *tmp;
 
     if (!shell.flags)
-        return(my_join(shell.cmd, NULL));
+        return(shell.cmd);
     flags = shell.flags;
     my_command = my_join(shell.cmd, flags->content);
     flags = flags->next;
@@ -160,21 +159,21 @@ char    *join_my_command(t_shell shell)
 }
 
 
-void    join_my_shell(t_shell   *shell, int n)
+void    join_my_shell(t_minishell *minishell, int n)
 {
     int i;
-
     i = 0;
     while (i < n)
     {
-        shell[i].full_commnad = join_my_command(shell[i]);
+        minishell->shell[i].full_commnad = join_my_command(minishell->shell[i]);
         i++;
     }
 }
 
-void    parsing(t_shell    *shell, char **arr)
+void    parsing(t_minishell *minishell, char **arr)
 {
-    initial_my_shell(shell, arr);
-    creat_my_shell(shell, arr);
-    // join_my_shell(shell, nbr_commands(arr));
+    //printf("this is the cmd: %s \n %s\n", shell->cmd, arr[0]);
+    initial_my_shell(minishell, arr);
+    creat_my_shell(minishell, arr);
+    join_my_shell(minishell, nbr_commands(arr));
 }

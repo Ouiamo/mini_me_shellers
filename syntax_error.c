@@ -62,7 +62,9 @@ char    *third_cheak(char **arr)
 char    *cheak_arr(char  **arr)
 {
     char    *ptr;
+    int i;
 
+    i = 0;
     if (**arr == '|' || **arr == '&')
         return (*arr);
     if (cheak_prnt(arr))
@@ -78,18 +80,23 @@ char    *cheak_arr(char  **arr)
         ptr = third_cheak(arr);
         if (**arr == '(' && ptr)
             return (ptr);
+        else if (i != 0 && **arr == '(' && (**(arr - 1) != '|' || **(arr - 1) != '&'))
+            return (*(arr + 1));
         if (*arr)
-            arr++;  
+            arr++;
+        i++;  
     }
     return (NULL);
 }
 
-void    syntax_error(char **arr)
+int   syntax_error(char **arr)
 {
     if (cheak_arr(arr))
     {
         printf("minishell: syntax error near unexpected token `%s'\n", cheak_arr(arr));
+        return (1);
     }
+    return (0);
 }
 
 // int main (int ac, char **av)

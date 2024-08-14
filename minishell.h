@@ -6,7 +6,7 @@
 /*   By: oaoulad- <oaoulad-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 02:42:23 by oaoulad-          #+#    #+#             */
-/*   Updated: 2024/08/10 18:33:27 by oaoulad-         ###   ########.fr       */
+/*   Updated: 2024/08/14 09:40:36 by oaoulad-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,16 @@ typedef struct s_shell
 	char	*cmd;
 	int		pipe_type;
 	int		prnt;
-	t_list	*flags;
-	char	**arr;
-}								t_shell;
+	t_list	*flags;//args;
+}	t_shell;
+
+typedef struct minishell
+{
+	int			exit_status;// tray to add this tatus to suntax error
+	char		**env;
+	t_shell		*shell;
+}	t_minishell;
+
 
 typedef enum e_signal_status
 {
@@ -56,8 +63,9 @@ size_t  ft_strlen(char *str);
 int white_spaces(char c);
 void    read_user_cmd(char **env);
 char **tokensation(char *input);
-void    syntax_error(char **arr);
-void    parsing(t_shell    *shell, char **arr);
+int    syntax_error(char **arr);
+int nbr_commands(char **arr);
+void    parsing(t_minishell *minishell, char **arr);
 
 
 #endif
