@@ -1,7 +1,7 @@
 #include "minishell.h"
 int white_spaces(char c)
 {
-    if (c == ' ' || c == '\t'   )
+    if (c == ' ' || c == '\t' || c == '\n')
         return (1);
     return (0);
 }
@@ -17,9 +17,13 @@ char    *handel_quotes(char *input)
     while (input[i] && input[i] != quote)
         i++;
     if (input[i] != quote)
+    {
         printf("UNCLOSED QUOTE\n");
+        return (NULL);
+    }
     else if(input[i] == quote)
         i++;
+    //printf ("here is the rst %s\n", &input[i]);
     return (&input[i]);
 
 }
@@ -54,7 +58,12 @@ char    *handel_normal_arg(char *input)
     while (input[i] && !white_spaces(input[i]) && input[i] != '|' && input[i] != '&' && input[i] != '>' && input[i] != '<' && input[i] != '(' && input[i] != ')')
         {
             if (input[i] == 34 || input[i] == 39)
+            {
                 input = handel_quotes(&input[i]);
+                printf("after handel quotes %s\n", input);
+            }
+            if (!input)
+                return (NULL);
             else
                 i++;
         }
@@ -73,14 +82,21 @@ int count_tokens(char *input)
     while (*input)
     {
         // if (*input == 34 || *input == 39) 
-        // //     input = handel_quotes(input);
+        //     input = handel_quotes(input);
         // else 
         if (*input == '|' || *input == '&' || *input == '>' || *input == '<')
             input = handel_pipe_redir(input);
         else if (*input == '(' || *input == ')')
             input = handel_prnt(input);
         else
-            input = handel_normal_arg(input);
+        {
+            // input = handel_normal_arg(input);
+            // printf ("here is the rst 2 %s\n", input);
+            if (!input)
+            {
+                return (-1);
+            }
+        }
         while (white_spaces(*input))
             input++;
         count++;
@@ -191,6 +207,8 @@ char    **tokensation(char *input)
     char    **arr;
 
     tokens = count_tokens(input);
+    if (tokens < 0)
+        return (NULL);
     printf("nbr of tokens : %d\n", tokens);
     arr = malloc(sizeof(char *) * (tokens + 1));
     arr = cpy_to_arr(input, arr, tokens);

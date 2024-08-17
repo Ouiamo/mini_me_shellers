@@ -6,7 +6,7 @@
 /*   By: oaoulad- <oaoulad-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 02:50:19 by oaoulad-          #+#    #+#             */
-/*   Updated: 2024/08/14 09:40:09 by oaoulad-         ###   ########.fr       */
+/*   Updated: 2024/08/14 11:25:25 by oaoulad-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,30 +69,32 @@ void    read_user_cmd(char **env)
             continue;
         add_history(input);
         arr = tokensation(input);
+        if (!arr)
+            continue;
         int i = 0;
-        // while (arr[i] != NULL)
-        // {
-        //     printf("this is : %s\n ",arr[i]);
-        //     i++;
-        //     printf("%d\n", i);
-        // }
+        while (arr[i] != NULL)
+        {
+            printf("this is : %s\n ",arr[i]);
+            i++;
+            printf("%d\n", i);
+        }
         if (syntax_error(arr))
             continue;
         parsing(&minishell, arr);
-        i = 0;
-		while (i < nbr_commands(arr))
-		{
-			printf("this is command %s\n", minishell.shell[i].full_commnad);
-			printf("this is cmd %s\n", minishell.shell[i].cmd);
-			printf("this is pipetype %d\n", minishell.shell[i].pipe_type);
-			printf("this is parant %d\n", minishell.shell[i].prnt);
-			while (minishell.shell[i].flags)
-			{
-			printf("this is args %s\n", (char *)minishell.shell[i].flags->content);
-			minishell.shell[i].flags = minishell.shell[i].flags->next;
-			}
-			printf ("---------------------this is the nbr %d-------------------\n", i);
-			i++;
-		}
+        // i = 0;
+		// while (i < nbr_commands(arr))
+		// {
+		// 	printf("this is command %s\n", minishell.shell[i].full_commnad);
+		// 	printf("this is cmd %s\n", minishell.shell[i].cmd);
+		// 	printf("this is pipetype %d\n", minishell.shell[i].pipe_type);
+		// 	printf("this is parant %d\n", minishell.shell[i].prnt);
+		// 	while (minishell.shell[i].flags)
+		// 	{
+		// 	printf("this is args %s\n", (char *)minishell.shell[i].flags->content);
+		// 	minishell.shell[i].flags = minishell.shell[i].flags->next;
+		// 	}
+		// 	printf ("---------------------this is the nbr %d-------------------\n", i);
+		// 	i++;
+		// }
     }
 }
